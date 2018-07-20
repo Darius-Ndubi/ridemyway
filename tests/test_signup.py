@@ -2,10 +2,10 @@ import pytest,psycopg2,json
 
 from app import app
 from app.db import connTDb
-#from create_testdb import createall_tables
+from app.create_testdb import createall_tables
 
 #create tables if no exists
-#createall_tables()
+createall_tables()
 
 """
     Mock user data to be used to fill the required tables columns

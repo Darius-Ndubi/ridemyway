@@ -1,4 +1,4 @@
-from db import connDb
+from app.db import connDb
 
 def createall_tables():
     commands=[
