@@ -65,7 +65,7 @@ def test_signup():
         assert response.json=={"Successfull":"Proceed to login"}
         assert(response.status_code==200)
 
-
+"""
 """
     A test to test if the email field is empty
 """
@@ -107,3 +107,5 @@ def test_signup():
     #assert(old_num_users==new_num_users)
         assert response.json=={"Error": "Password fields cannot be empty"}
         assert(response.status_code==401)
+
+"""
