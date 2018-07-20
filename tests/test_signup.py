@@ -1,5 +1,5 @@
 import pytest,psycopg2,json
-
+from flask_jwt_extended import create_access_token
 from app import app
 from app.db import connTDb
 from app.create_testdb import createall_tables
@@ -15,6 +15,11 @@ mock_reg={"email":"yagamidelight@gmail.com","username":"delight","password":"del
 mock_reg1={"email":"","username":"delight","password":"delight"}
 mock_reg2={"email":"yagamidelight@gmail.com","username":"","password":"delight"}
 mock_reg3={"email":"yagamidelight@gmail.com","username":"delight","password":""}
+
+"""
+    Mock user data for user login
+"""
+mock_log={"email":"yagamidelight@gmail.com","password":"delight"}
 
 """
     A fuction to find users signed in
@@ -109,3 +114,18 @@ def test_signup():
             assert(response.status_code==401)
 
 """
+"""
+    Fuction to create access token on user login
+"""
+def mock_login_token():
+    pass
+
+"""
+    A test to test user signin endpoint
+"""
+def test_signin():
+    result=app.test_client()
+    response=result.post('/api/v1/auth/login', data=json.dumps(mock_log),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    assert response.json=={"Email Error": "Email is already linked to another user, pick another one"}
+    assert(response.status_code==406)
