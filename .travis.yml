@@ -9,6 +9,12 @@ install:
   - pip install coverage
   - pip install coveralls
 
+before_script:
+# command for creating a role and a database
+  - psql -c "CREATE ROLE dario WITH SUPERUSER LOGIN PASSWORD 'riot';" -U postgres
+  - psql -c 'CREATE DATABASE testride;' -U postgres
+  - psql -c 'CREATE DATABASE ridemyway;' -U postgres
+  
 script: 
   - cd tests
   - nosetests test_signup.py --with-coverage --cover-package=resources.users
