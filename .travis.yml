@@ -11,7 +11,7 @@ install:
 
 script: 
   - cd tests
-  - nosetests test_signup.py --with-coverage 
+  - nosetests test_signup.py --with-coverage --cover-package=resources.users
 
 after_success:
   - coveralls
