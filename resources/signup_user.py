@@ -18,18 +18,7 @@ class User_fields(object):
 
         return self.args
 
-    def get_user_login(self):
-
-        self.parser.add_argument('email', required=True,
-                            help="email cannot be blank!")
-        self.parser.add_argument('password', required=True,
-                            help="password cannot be blank!")
-
-        self.args = self.parser.parse_args()
-
-        return self.args
-
-api = Namespace("users",  description="user authentication endpoints")
+api = Namespace("signup",  description="user authentication endpoints")
 
 R=User_fields()
 
@@ -67,6 +56,9 @@ class Signup(Resource):
         else:
             self.new_user.signupUser()
             return({"Successfull":"Proceed to login"})
+
+
+            
 
 
 api.add_resource(Signup, '/auth/signup')

@@ -20,6 +20,7 @@ mock_reg3={"email":"yagamidelight@gmail.com","username":"delight","password":""}
     Mock user data for user login
 """
 mock_log={"email":"yagamidelight@gmail.com","password":"delight"}
+mock_log1={"email":"yagamidelight@gmail.com","password":"delhight"}
 
 """
     A fuction to find users signed in
@@ -116,16 +117,45 @@ def test_signup():
 """
 """
     Fuction to create access token on user login
+    takes in username data from mock_reg user
 """
 def mock_login_token():
-    pass
+    access_token=create_access_token(mock_reg.get('username'))
+    return access_token
 
 """
     A test to test user signin endpoint
 """
-def test_signin():
+def test_login():
     result=app.test_client()
     response=result.post('/api/v1/auth/login', data=json.dumps(mock_log),content_type='application/json')
-    json.loads(response.data.decode('utf-8'))
-    assert response.json=={"Email Error": "Email is already linked to another user, pick another one"}
-    assert(response.status_code==406)
+    log_input=json.loads(response.data.decode('utf-8'))
+    if log_input.get('email')=="":
+        assert response.json=={"Error": "Email field cannot be empty"}
+        assert(response.status_code==401)
+    elif log_input.get('password')=="":
+        assert response.json=={"Error": "Password field cannot be empty"}
+        assert(response.status_code==401)
+"""
+    A test to test if the entered password matches the one stored
+"""
+
+def test_login():
+    with app.app_context():
+        result=app.test_client()
+        response=result.post('/api/v1/auth/login', data=json.dumps(mock_log1),content_type='application/json')
+        json.loads(response.data.decode('utf-8'))
+        assert (response.json=={"Error":"Invalid password"})
+        assert(response.status_code==401)
+
+
+"""
+    A test to check token creation on user login
+"""   
+        
+def test_login():
+    with app.app_context():
+        result=app.test_client()
+        response=result.post('/api/v1/auth/login', data=json.dumps(mock_log),content_type='application/json')
+        json.loads(response.data.decode('utf-8'))
+        assert (response.json!={mock_reg.get('username'): {"Use this token to create a ride":mock_login_token()}})

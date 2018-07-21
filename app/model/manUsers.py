@@ -72,7 +72,7 @@ def signinusercheck(email):
             Email check when user wants to sign in
         """
         connection=connDb()
-        curs.connection.cursor()
+        curs=connection.cursor()
         #check if email exists 
         curs.execute("SELECT * FROM new_user WHERE email =%(email)s",{'email':email})
         #find the whole row
