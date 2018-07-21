@@ -17,7 +17,7 @@ before_script:
   
 script: 
   - cd tests
-  - nosetests test_signup.py --with-coverage --cover-package=resources.users
+  - nosetests test_signup.py --with-coverage --cover-package=resources
 
 after_success:
   - coveralls
