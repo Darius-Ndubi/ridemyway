@@ -31,4 +31,6 @@ class User(object):
         rides=curs.fetchall()
         #print (self.rides)
         curs.close()
+        connection.commit()
+        connection.close()
         return jsonify(rides)
