@@ -73,6 +73,7 @@ def signinusercheck(email):
         """
         connection=connDb()
         curs=connection.cursor()
+        
         #check if email exists 
         curs.execute("SELECT * FROM new_user WHERE email =%(email)s",{'email':email})
         #find the whole row
