@@ -23,6 +23,8 @@ api.add_namespace(signup, path='/api/v1')
 from resources.login_user import api as login
 api.add_namespace(login, path='/api/v1')
 
+from resources.rides import api as about_rides
+api.add_namespace(about_rides, path='/api/v1')
 
 """from endpoints.rides import api as rides
 api.add_namespace(rides, path='/api/v1')
