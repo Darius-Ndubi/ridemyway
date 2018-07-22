@@ -34,3 +34,18 @@ class User(object):
         connection.commit()
         connection.close()
         return jsonify(rides)
+
+    #method to find specific ride in db
+    @staticmethod
+    def get_ride(search_id):
+        #locate ride with the matching id in the db and return it (email)s",{'email':self.email}
+        connection=connDb()
+        curs=connection.cursor()
+        curs.execute("SELECT * FROM ride WHERE r_id=%(r_id)s",{'r_id':search_id})
+        #get the whole row
+        found=curs.fetchall()
+        #print (self.found)
+        curs.close()
+        connection.commit()
+        connection.close()
+        return found
