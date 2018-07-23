@@ -16,6 +16,11 @@ before_script:
   - psql -c 'CREATE DATABASE ridemyway;' -U postgres
   
 script: 
+  # command to ensure tables are created
+  - cd app
+  - python create_tables.py
+  - python create_testdb.py
+  #command to run tests
   - cd tests
   - nosetests  --with-coverage --cover-package=resources
 
