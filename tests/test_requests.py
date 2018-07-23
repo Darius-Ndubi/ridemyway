@@ -57,6 +57,6 @@ def test_ride_requests():
         #new_requests_num=requests_num()
         if new_requests_num-1==old_resquests_num:
             assert response.json=={"Successful":"Request posted successfull"}
-            assert (response.status_code==200)  
+            assert (response.status_code==201)  
 
 
