@@ -2,7 +2,7 @@ import pytest,psycopg2,json
 from flask_jwt_extended import create_access_token
 from app import app
 from tests.test_signup import mock_login_token
-from app.db import connDb
+from app.db import connTDb
 
 """
     Mock data to represent a ride to be added to the database
@@ -35,7 +35,7 @@ mock_ride1={
     A fuction to test the successful addition of a ride to the database
 """
 def ride_get():
-    connection=connDb()
+    connection=connTDb()
     curs=connection.cursor()
 
     curs.execute("SELECT * FROM ride")
