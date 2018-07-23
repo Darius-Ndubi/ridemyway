@@ -29,7 +29,6 @@ mock_ride1={
     "start_time": "0700",
     "arrival_time": "1700",
     "ride_price": 1500,
-    "creator":"Yagami Light"
     }
 
 """
@@ -75,6 +74,18 @@ def test_Get_ride():
 def test_Get_ride():
     result=app.test_client()
     response=result.get('/api/v1/rides/1')
+    assert response.json==[[1,
+    "KAC 345T",
+    "Athens to Sparta",
+    "06-06-2018",
+    45,
+    7,
+    "0700",
+    "1700",
+    1500,
+    'delight'
+    ]]
+     
     assert(response.status_code==200)
 
 """
