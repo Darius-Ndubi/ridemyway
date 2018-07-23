@@ -27,7 +27,7 @@ class Ride_requests(Resource):
         
         User.create_requests(ride_id=self.id,car_licence=search_ride[0][1],title=search_ride[0][2],requester_name=get_jwt_identity(),ride_date=search_ride[0][3],num_seats=search_ride[0][5],ride_price=search_ride[0][8],creator=search_ride[0][9])
 
-        return({"Successful":"Request posted successfull"})
+        return({"Successful":"Request posted successfull"}),200
 
 
 api.add_resource(Ride_requests,'/rides/<int:id>/requests')

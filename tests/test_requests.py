@@ -2,7 +2,7 @@ import pytest,psycopg2,json
 from flask_jwt_extended import create_access_token
 from app import app
 from tests.test_signup import mock_login_token
-from app.db import connDb
+from app.db import connTDb,connDb
 
 """
     Ride requests mock data
@@ -27,6 +27,8 @@ def requests_num():
     #print (len(all))
 
     return len(all)
+
+
 """
     A test on  ride requests creation
 """
@@ -38,11 +40,12 @@ def test_ride_requests():
         response=result.post('/api/v1/rides/4/requests', data=json.dumps(mock_req1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         json.loads(response.data.decode('utf-8'))
         new_requests_num=requests_num()
-        if new_requests_num-1==old_resquests_num:
-           assert response.json=={"Successful":"Request posted successfull"}
-           assert (response.status_code==200)
-        else:
+        if new_requests_num==old_resquests_num:
             assert response.json=={"Error":"You cannot request your own ride"}
-            assert (response.status_code==403) 
+            assert (response.status_code==403)
+        else:
+            assert response.json=={"Successful":"Request posted successfull"}
+            assert (response.status_code==200)
+ 
 
 
