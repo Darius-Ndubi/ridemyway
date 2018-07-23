@@ -73,3 +73,14 @@ class User(object):
         curs.close()
         connection.commit()
         connection.close()
+    
+    #method to create a ride request
+    @staticmethod
+    def create_requests(ride_id,car_licence,requester_name,ride_date,title,num_seats,ride_price,creator):
+        connection=connDb()
+        curs=connection.cursor()
+        curs.execute("INSERT INTO requestss (ride_id,car_license,requester_name,ride_date,title,num_seats,ride_price,creator) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",(ride_id,car_licence,requester_name,ride_date,title,num_seats,ride_price,creator))
+        curs.close()
+        connection.commit()
+        connection.close()
+    
