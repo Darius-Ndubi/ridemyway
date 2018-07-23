@@ -21,7 +21,7 @@ mock_ride={
 
 mock_ride1={
     "car_license": "KAC 345T",
-    "title": "Ithaca to Sparta",
+    "title": "Athens to Sparta",
     "ride_date": "06-06-2018",
     "distance": 45,
     "num_seats": 7,
