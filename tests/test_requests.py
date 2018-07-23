@@ -41,12 +41,21 @@ def test_ride_requests():
         response=result.post('/api/v1/rides/4/requests', data=json.dumps(mock_req1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         json.loads(response.data.decode('utf-8'))
         new_requests_num=requests_num()
-        if new_requests_num==old_resquests_num:
-            assert response.json=={"Error":"You cannot request your own ride"}
-            assert (response.status_code==403)
-        else:
-            assert response.json=={"Successful":"Request posted successfull"}
-            assert (response.status_code==200)
+        assert (new_requests_num==old_resquests_num)
+        assert response.json=={"Error":"You cannot request your own ride"}
+        assert (response.status_code==403)
+       
  
+def test_ride_requests():
+    with app.app_context():
+        tok=mock_login_token()
+        old_resquests_num=requests_num()
+        result=app.test_client()
+        response=result.post('/api/v1/rides/4/requests', data=json.dumps(mock_req1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        json.loads(response.data.decode('utf-8'))
+        new_requests_num=requests_num()
+        assert (new_requests_num-1==old_resquests_num)
+        assert response.json=={"Successful":"Request posted successfull"}
+        assert (response.status_code==200    
 
 
