@@ -2,7 +2,8 @@ import pytest,psycopg2,json
 from flask_jwt_extended import create_access_token
 from app import app
 from tests.test_signup import mock_login_token
-from app.db import connTDb,connDb
+from app.db import connTDb
+from app.create_testdb import createall_tables
 
 """
     Ride requests mock data
@@ -14,7 +15,7 @@ mock_req1={'ride_id':1}
     it returns the found number
 """
 def requests_num():
-    connection=connDb()
+    connection=connTDb()
     curs=connection.cursor()
 
     curs.execute("SELECT * FROM requestss")
