@@ -3,7 +3,7 @@ from flask_jwt_extended import create_access_token
 from app import app
 from tests.test_signup import mock_login_token
 from app.db import connTDb
-from app.create_testdb import createall_tables
+
 
 """
     Mock data to represent a ride to be added to the database
