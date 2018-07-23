@@ -21,6 +21,7 @@ class Ride_requests(Resource):
         #find the ride if the ride exists
         search_ride=User.get_ride(self.id)
         #user cant request there own ride
+        #print (search_ride)
         if requester_name==search_ride[0][9]:
             return ({"Error":"You cannot request your own ride"}),403
         
