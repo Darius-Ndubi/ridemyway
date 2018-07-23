@@ -53,7 +53,7 @@ class Get_ride(Resource):
 
         #if ride is found show the ride to user
         if search_ride:
-            return search_ride
+            return (search_ride),200
         else:
             return ({"Error":"Ride does not exist"}),404
 
