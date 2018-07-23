@@ -3,7 +3,10 @@ from flask_jwt_extended import create_access_token
 from flask import abort,Response,jsonify
 from werkzeug.security import check_password_hash,generate_password_hash
 from app.db import connDb
+from app.create_tables import createall_tables
 
+#create tables if none exists
+createall_tables()
 
 """
     A class to handle the registration of users
