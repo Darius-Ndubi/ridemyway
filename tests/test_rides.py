@@ -22,7 +22,7 @@ mock_ride={
 
 mock_ride1={
     "car_license": "KAC 345T",
-    "title": "Athens to Sparta",
+    "title": "Ithacaa to Sparta",
     "ride_date": "06-06-2018",
     "distance": 45,
     "num_seats": 7,
@@ -100,8 +100,8 @@ def test_Add_ride():
         old_num_rides=ride_get()
         result=app.test_client()
         response=result.post('/api/v1/rides', data=json.dumps(mock_ride1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        json.loads(response.data.decode('utf-8'))
         new_num_rides=ride_get()
+        json.loads(response.data.decode('utf-8'))
         if new_num_rides-1==old_num_rides:
             assert response.json =={"Success":"Your ride has been created and posted"}
-            assert (response.status_code==201)
+            assert (response.status_code==200)
