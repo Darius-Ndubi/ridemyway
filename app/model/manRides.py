@@ -49,3 +49,27 @@ class User(object):
         connection.commit()
         connection.close()
         return found
+
+    #method to query if ride exists
+    def checkRideExistance(self,title):
+        self.title=title
+        connection=connDb()
+        curs=connection.cursor()
+        curs.execute("SELECT * FROM ride WHERE title=%(title)s",{'title':self.title})
+        self.existance = curs.fetchone()
+        curs.close()
+        connection.commit()
+        connection.close()
+        return self.existance
+
+     
+    #create a ride method for user
+    def create_ride(self,):
+        connection=connDb()
+        curs=connection.cursor()
+        
+        curs.execute("INSERT INTO ride (car_license,title,ride_date,num_seats,distance,start_time,arrival_time,ride_price,creator) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)",(self.car_license,self.title,self.ride_date,self.num_seats,self.distance,self.start_time,self.arrival_time,self.ride_price,self.creator))
+
+        curs.close()
+        connection.commit()
+        connection.close()
