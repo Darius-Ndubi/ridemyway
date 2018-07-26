@@ -16,8 +16,7 @@ mock_ride={
     "num_seats": 7,
     "start_time": "0700",
     "arrival_time": "1700",
-    "ride_price": 1500,
-    "creator":"Yagami Light"
+    "ride_price": 1500
     }
 
 mock_ride1={
