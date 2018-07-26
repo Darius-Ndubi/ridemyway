@@ -81,8 +81,7 @@ def test_Get_ride():
     7,
     "0700",
     "1700",
-    1500,
-    "delight"
+    1500
     ]]
      
     assert(response.status_code==200)
