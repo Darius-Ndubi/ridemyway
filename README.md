@@ -1,5 +1,5 @@
 
-- [![Build Status](https://travis-ci.org/Darius-Ndubi/ridemyway.svg?branch=master)](https://travis-ci.org/Darius-Ndubi/ridemyway)
+- [![Build Status](https://travis-ci.org/Darius-Ndubi/ridemyway.svg?branch=ft-user-create-ride)](https://travis-ci.org/Darius-Ndubi/ridemyway)
 
 - [![Coverage Status](https://coveralls.io/repos/github/Darius-Ndubi/ridemyway/badge.svg?branch=ft-user-login)](https://coveralls.io/github/Darius-Ndubi/ridemyway?branch=ft-user-login)
 
