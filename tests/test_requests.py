@@ -57,7 +57,7 @@ def test_ride_requests():
         assert new_requests_num-1==old_resquests_num
         assert response.json=={"Successful":"Request posted successfull"}
         assert (response.status_code==200) 
-        
+
 """
     A test on getting ride requests
     ->  1st test on wether a ride request has been created
@@ -79,7 +79,7 @@ def test_ride_requests():
         response=result.get('/api/v1/rides/1/requests',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         assert response.json==[
 	    [
-		4,
+		1,
 		1,
 		"KAC 345T",
 		"user",
