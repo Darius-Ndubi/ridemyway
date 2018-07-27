@@ -87,7 +87,8 @@ def test_ride_requests():
 		"Ithacaa to Sparta",
 		7,
 		1500,
-		"delight"
+		"delight",
+        None
         ]
         ]
         assert(response.status_code==200)
