@@ -11,16 +11,19 @@ createall_tables()
     Mock user data to be used to fill the required tables columns
     The data will mock a real user
 """
-mock_reg={"email":"yagamidelight@gmail.com","username":"delight","password":"delight"}
-mock_reg1={"email":"","username":"delight","password":"delight"}
-mock_reg2={"email":"yagamidelight@gmail.com","username":"","password":"delight"}
-mock_reg3={"email":"yagamidelight@gmail.com","username":"delight","password":""}
-
+mock_reg=[{"email":"yagamidelight@gmail.com","username":"delight","password":"delight"},
+          {"email":"","username":"delight","password":"delight"},
+          {"email":"yagamidelight@gmail.com","username":"","password":"delight"},
+          #another data of a user
+          {"email":"e@g.com","username":"user","password":"usedall"}
+]
 """
     Mock user data for user login
 """
-mock_log={"email":"yagamidelight@gmail.com","password":"delight"}
-mock_log1={"email":"yagamidelight@gmail.com","password":"delhight"}
+mock_log=[{"email":"yagamidelight@gmail.com","password":"delight"},
+          {"email":"yagamidelight@gmail.com","password":"delhight"},
+          {"email":"e@g.com","password":"usedall"}
+]
 
 """
     A fuction to find users signed in
@@ -59,11 +62,25 @@ def test_signup():
 """
     A test on user signup 
     the test tests adding of new user to the data base
+    1 -> user delight
+    2 -> user user
 """
 def test_signup():
     old_num_users=registered()
     result=app.test_client()
-    response=result.post('/api/v1/auth/signup', data=json.dumps(mock_reg),content_type='application/json')
+    response=result.post('/api/v1/auth/signup', data=json.dumps(mock_reg[0]),content_type='application/json')
+    json.loads(response.data.decode('utf-8'))
+    new_num_users=registered()
+    #print (new_num_users)
+    if new_num_users-1==old_num_users:
+        assert response.json=={"Successfull":"Proceed to login"}
+        assert(response.status_code==200)
+
+#test registration for a seccond user
+def test_signup():
+    old_num_users=registered()
+    result=app.test_client()
+    response=result.post('/api/v1/auth/signup', data=json.dumps(mock_reg[3]),content_type='application/json')
     json.loads(response.data.decode('utf-8'))
     new_num_users=registered()
     #print (new_num_users)
@@ -119,8 +136,8 @@ def test_signup():
     Fuction to create access token on user login
     takes in username data from mock_reg user
 """
-def mock_login_token():
-    access_token=create_access_token(mock_reg.get('username'))
+def mock_login_token(uname):
+    access_token=create_access_token(uname)
     return access_token
 
 """
@@ -151,11 +168,12 @@ def test_login():
 
 """
     A test to check token creation on user login
+    -> 1 for the first user
 """   
         
 def test_login():
     with app.app_context():
         result=app.test_client()
-        response=result.post('/api/v1/auth/login', data=json.dumps(mock_log),content_type='application/json')
+        response=result.post('/api/v1/auth/login', data=json.dumps(mock_log[0]),content_type='application/json')
         json.loads(response.data.decode('utf-8'))
-        assert (response.json!={mock_reg.get('username'): {"Use this token to create a ride":mock_login_token()}})
+        assert (response.json!={mock_reg[0].get('username'): {"Use this token to create a ride":mock_login_token(mock_reg[0].get('username'))}})

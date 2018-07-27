@@ -1,14 +1,14 @@
 import pytest,psycopg2,json
 from flask_jwt_extended import create_access_token
 from app import app
-from tests.test_signup import mock_login_token
+from tests.test_signup import mock_login_token,mock_reg
 from app.db import connDb
 
 
 """
     Mock data to represent a ride to be added to the database
 """
-mock_ride={
+mock_ride=[{
     "car_license": "KAC 345T",
     "title": "Troy to Sparta",
     "ride_date": "06-06-2018",
@@ -17,9 +17,8 @@ mock_ride={
     "start_time": "0700",
     "arrival_time": "1700",
     "ride_price": 1500
-    }
-
-mock_ride1={
+    },
+    {
     "car_license": "KAC 345T",
     "title": "Ithacaa to Sparta",
     "ride_date": "06-06-2018",
@@ -29,6 +28,7 @@ mock_ride1={
     "arrival_time": "1700",
     "ride_price": 1500,
     }
+]
 
 """
     A fuction to test the successful addition of a ride to the database
@@ -75,7 +75,7 @@ def test_Get_ride():
     response=result.get('/api/v1/rides/1')
     assert response.json==[[1,
     "KAC 345T",
-    "Athens to Sparta",
+    "Ithacaa to Sparta",
     "06-06-2018",
     45,
     7,
@@ -94,9 +94,9 @@ def test_Get_ride():
 """
 def test_Add_ride():
     with app.app_context():
-        tok=mock_login_token()
+        tok=mock_login_token(mock_reg[0].get('username'))
         result=app.test_client()
-        response=result.post('/api/v1/rides', data=json.dumps(mock_ride),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        response=result.post('/api/v1/rides', data=json.dumps(mock_ride[0]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         json.loads(response.data.decode('utf-8'))
         assert response.json =={"Error":"A Title like the one you want to enter exists,Let it Be unique"}
         assert (response.status_code==406)
@@ -106,10 +106,10 @@ def test_Add_ride():
 """
 def test_Add_ride():
     with app.app_context():
-        tok=mock_login_token()
+        tok=mock_login_token(mock_reg[0].get('username'))
         old_num_rides=ride_get()
         result=app.test_client()
-        response=result.post('/api/v1/rides', data=json.dumps(mock_ride1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        response=result.post('/api/v1/rides', data=json.dumps(mock_ride[1]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         new_num_rides=ride_get()
         json.loads(response.data.decode('utf-8'))
         if new_num_rides-1==old_num_rides:
