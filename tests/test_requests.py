@@ -88,7 +88,7 @@ def test_ride_requests():
 		7,
 		1500,
 		"delight",
-        None
+        null
         ]
         ]
         assert(response.status_code==200)
