@@ -14,6 +14,19 @@ api=Namespace("about_requests", description="Ride requests endpoints")
 
 class Ride_requests(Resource):
     @jwt_required
+    def get(self,id):
+        self.id=id
+        creator_name=get_jwt_identity()
+        #print(creator_name)
+        found=User.view_requests(creator_name,self.id)
+        if found :
+            #print(found)
+            return (found)
+        else:
+            return ({"Error":"No requests have been made to your ride yet"}),400
+
+
+    @jwt_required
     def post(self,id):
         self.id=id
         requester_name=get_jwt_identity()

@@ -38,7 +38,7 @@ def test_ride_requests():
         tok=mock_login_token()
         old_resquests_num=requests_num()
         result=app.test_client()
-        response=result.post('/api/v1/rides/4/requests', data=json.dumps(mock_req1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        response=result.post('/api/v1/rides/1/requests', data=json.dumps(mock_req1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
         json.loads(response.data.decode('utf-8'))
         new_requests_num=requests_num()
         assert (new_requests_num==old_resquests_num)
@@ -59,4 +59,48 @@ def test_ride_requests():
             assert response.json=={"Successful":"Request posted successfull"}
             assert (response.status_code==201)  
 
+"""
+    A test on getting ride requests
+    ->  1st test on wether a ride request has been created
+    ->  2nd test on getting created requests on your ride
+"""
+def test_ride_requests():
+    with app.app_context():
+        result=app.test_client()
+        tok=mock_login_token()
+        response=result.get('api/v1/rides/1/requests',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        assert response.json=={"Error":"No requests have been made to your ride yet"}
+        assert (response.status_code==400)
 
+def test_ride_requests():
+    with app.app_context():
+        result=app.test_client()
+        tok=mock_login_token()
+        response=result.get('api/v1/rides/3/requests',content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        assert response.json==[
+	    [
+		1,
+		3,
+		"KAC 345T",
+		"user",
+		"06-06-2018",
+		"Ithacaa to Sparta",
+		7,
+		1500,
+		"delight",
+        None
+        ],
+        [
+		2,
+		3,
+		"KAC 345T",
+		"user",
+		"06-06-2018",
+		"Ithacaa to Sparta",
+		7,
+		1500,
+		"delight",
+        None
+        ]
+        ]
+        assert(response.status_code==200)

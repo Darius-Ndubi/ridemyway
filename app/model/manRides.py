@@ -84,3 +84,14 @@ class User(object):
         connection.commit()
         connection.close()
     
+    #method to get ride requests from db
+    @staticmethod
+    def view_requests(creator,ride_id):
+        connection=connDb()
+        curs=connection.cursor()
+        curs.execute("SELECT * FROM requestss WHERE creator=%(creator)s and ride_id=%(ride_id)s ",{'creator':creator,'ride_id':ride_id})
+        rows=curs.fetchall()
+        curs.close()
+        connection.commit()
+        connection.close()
+        return rows
