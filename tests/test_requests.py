@@ -88,9 +88,32 @@ def test_ride_requests():
 		7,
 		1500,
 		"delight",
-        None
+        'accept'
         ]
         ]
         assert(response.status_code==200)
 
  
+"""
+    A test on ride response endpoint
+        ->A test on wrong req_id entry
+        -> A test on successful request response
+        -> A test on unsuccessful request response
+"""
+def test_ride_respond():
+    with app.app_context():
+        result=app.test_client()
+        tok=mock_login_token(mock_reg[0].get('username'))
+        response=result.put('/api/v1/rides/respond/20/decline', data=json.dumps(mock_req1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        json.loads(response.data.decode('utf-8'))
+        assert response.json=={'Error': 'Make sure you have entered the correct request id'}
+        assert (response.status_code==200)
+
+def test_ride_respond():
+    with app.app_context():
+        result=app.test_client()
+        tok=mock_login_token(mock_reg[0].get('username'))
+        response=result.put('/api/v1/rides/respond/1/accept', data=json.dumps(mock_req1),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        json.loads(response.data.decode('utf-8'))
+        assert response.json=={'Success': 'Your response has been posted successfully'}
+        assert (response.status_code==200)

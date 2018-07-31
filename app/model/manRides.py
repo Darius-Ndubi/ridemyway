@@ -95,3 +95,25 @@ class User(object):
         connection.commit()
         connection.close()
         return rows
+
+    #method to edit ride requests by ride creator
+    @staticmethod
+    def ride_response(creator,req_id):
+        connection=connDb()
+        curs=connection.cursor()
+        curs.execute("SELECT * FROM requestss WHERE req_id=%(req_id)s and creator=%(creator)s ",{'req_id':req_id,'creator':creator})
+        rows=curs.fetchone()
+        curs.close()
+        connection.commit()
+        connection.close()
+        return rows
+
+    #method to add rides response to column
+    @staticmethod
+    def ride_action(req_id,action):
+        connection=connDb()
+        curs=connection.cursor()
+        curs.execute("UPDATE requestss SET action = %(action)s WHERE req_id=%(req_id)s",{'action':action,'req_id':req_id})
+        curs.close()
+        connection.commit()
+        connection.close()

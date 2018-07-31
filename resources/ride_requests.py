@@ -43,4 +43,26 @@ class Ride_requests(Resource):
         return({"Successful":"Request posted successfull"}),200
 
 
+
+class Ride_respond(Resource):
+    
+    @jwt_required
+    def put(self,req_id,action):
+        #find if the request exists
+        creator_name=get_jwt_identity()
+        #print (creator_name)
+        search_req=User.ride_response(creator_name,req_id)
+        #print (search_req)
+        #if search request is none error out to user
+        if search_req is None:
+            return {"Error":"Make sure you have entered the correct request id"}
+        else:
+            #search_req[0][9]=action
+            response_action=User.ride_action(req_id,action)
+            return {"Success":"Your response has been posted successfully"},200
+        return {"Error":"Response not created successfully"}
+
+
+
 api.add_resource(Ride_requests,'/rides/<int:id>/requests')
+api.add_resource(Ride_respond,'/rides/respond/<int:req_id>/<string:action>')
