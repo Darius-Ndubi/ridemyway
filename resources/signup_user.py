@@ -36,14 +36,16 @@ class Signup(Resource):
 
         #validating that  non of the enterd fields is empty
         if self.args['email'] == "":
-            return ({"Error": "Email field cannot be empty"}),401
+            return ({"Error": "Email field cannot be empty"}),400
         elif self.args['username'] == "":
-            return ({"Error": "Username field cannot be empty"}),401
+            return ({"Error": "Username field cannot be empty"}),400
         elif self.args['password'] == "":
-            return ({"Error": "Password fields cannot be empty"}),401
+            return ({"Error": "Password fields cannot be empty"}),400
         #check if the email has @ and .com
-        elif '@' and '.com' not in self.args['email']:
-            return ({"Error": "Email as enterd is not valid"}),401
+        elif '@'  not in self.args['email']:
+            return ({"Error": "Email as enterd is not valid"}),400
+        elif '.com' not in self.args['email']:
+            return ({"Error": "Email as enterd is not valid"}),400
 
         self.new_user=DbManager(email=self.args['email'],username=self.args['username'],password=self.args['password'])
 
@@ -51,11 +53,11 @@ class Signup(Resource):
         self.exist=self.new_user.checkUser()
         #if user is found give info why they cant be registerd
         if self.exist:
-            return({"Email Error":"Email is already linked to another user, pick another one"}),406
+            return({"Email Error":"Email is already linked to another user, pick another one"}),409
         #if not found allow them to register with us
         else:
             self.new_user.signupUser()
-            return({"Successfull":"Proceed to login"})
+            return({"Successfull":"Proceed to login"}),200
 
 
             

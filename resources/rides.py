@@ -9,16 +9,12 @@ class Rides_fields(object):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument('ride_date', required=True,
                             help="Date cannot be blank!")
-        self.parser.add_argument('distance', required=True,
-                            help="Distance cannot be blank!")
         self.parser.add_argument('title', required=True,
                             help="Title cannot be blank!")
         self.parser.add_argument('num_seats', required=True,
                              help="Number of seats cannot be blank!")
         self.parser.add_argument('start_time', required=True,
                                  help="start_time cannot be blank!")
-        self.parser.add_argument('arrival_time', required=True,
-                            help="arrival_time cannot be blank!")
         self.parser.add_argument('ride_price', required=True,
                             help="ride_price cannot be blank!")
         self.parser.add_argument('car_license', required=True,
@@ -72,23 +68,19 @@ class Add_ride(Resource):
 
         #checking if all the fields are entered
         if args['car_license'] == "":
-            return ({"Error": "car License field cannot be empty"})
+            return ({"Error": "car License field cannot be empty"}),400
         elif args['title'] == "":
-            return ({"Error": "The title cannot be empty"})
+            return ({"Error": "The title cannot be empty"}),400
         elif args['ride_date']=="":
-            return ({"Error":"The date of the ride cannot be empty"})
+            return ({"Error":"The date of the ride cannot be empty"}),400
         elif args['num_seats']=="":
-            return ({"Error":"The number of  available seats cannot be empty"})
-        elif args['distance']=="":
-            return ({"Error":"The Distance to be covered must be filled"})
+            return ({"Error":"The number of  available seats cannot be empty"}),400
         elif args['start_time']=="":
-            return ({"Error":"Please specify when the ride will start"})
-        elif args['arrival_time']=="":
-            return ({"Error":"Estimate the time we would arrive"})
+            return ({"Error":"Please specify when the ride will start"}),400
         elif args['ride_price']=="":
-            return ({"Info":"Filled cant be empty but if ride is free just input 0"})
+            return ({"Info":"Filled can't be empty but if ride is free just input 0"}),400
         
-        new_ride=User(car_license=args['car_license'],title=args['title'],ride_date=args['ride_date'],distance=args['distance'],num_seats=args['num_seats'],start_time=args['start_time'],arrival_time=args['arrival_time'],ride_price=args['ride_price'],creator=username)
+        new_ride=User(car_license=args['car_license'],title=args['title'],ride_date=args['ride_date'],num_seats=args['num_seats'],start_time=args['start_time'],ride_price=args['ride_price'],creator=username)
         
         exist=new_ride.checkRideExistance(args['title'])
         

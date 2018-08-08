@@ -16,10 +16,8 @@ def createall_tables():
             car_license VARCHAR(10) NOT NULL,
             title VARCHAR(20) NOT NULL,
             ride_date VARCHAR(10) NOT NULL,
-            distance INT NOT NULL,
             num_seats INT NOT NULL,
             start_time VARCHAR(10) NOT NULL,
-            arrival_time VARCHAR(10) NOT NULL,
             ride_price INT NOT NULL,
             creator VARCHAR(20) NOT NULL
             )

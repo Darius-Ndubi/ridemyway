@@ -10,14 +10,12 @@ class User(object):
 
 
     #class constructor
-    def __init__(self,creator, car_license, title, ride_date,num_seats, distance, start_time, arrival_time, ride_price):
+    def __init__(self,creator, car_license, title, ride_date,num_seats,start_time,ride_price):
         self.car_license = car_license
         self.title = title
         self.ride_date =ride_date
         self.num_seats=num_seats
-        self.distance = distance
         self.start_time = start_time
-        self.arrival_time = arrival_time
         self.ride_price = ride_price
         self.creator=creator
         
@@ -68,7 +66,7 @@ class User(object):
         connection=connDb()
         curs=connection.cursor()
         
-        curs.execute("INSERT INTO ride (car_license,title,ride_date,num_seats,distance,start_time,arrival_time,ride_price,creator) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)",(self.car_license,self.title,self.ride_date,self.num_seats,self.distance,self.start_time,self.arrival_time,self.ride_price,self.creator))
+        curs.execute("INSERT INTO ride (car_license,title,ride_date,num_seats,start_time,ride_price,creator) VALUES(%s,%s,%s,%s,%s,%s,%s)",(self.car_license,self.title,self.ride_date,self.num_seats,self.start_time,self.ride_price,self.creator))
 
         curs.close()
         connection.commit()

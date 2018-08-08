@@ -33,14 +33,14 @@ class Login(Resource):
 
         #validating that  non of the enterd fields is empty
         if args['email'] == "":
-            return ({"Error": "Email field cannot be empty"}),401
+            return ({"Error": "Email field cannot be empty"}),400
         elif args['password'] == "":
-            return ({"Error": "Password fields cannot be empty"}),401
+            return ({"Error": "Password field cannot be empty"}),400
 
         elif '@' not in args['email']:
-            return ({"Error": "Email as enterd is not valid"}),401
+            return ({"Error": "Email as enterd is not valid"}),400
         elif '.com' not in args['email']:
-            return ({"Error": "Email as enterd is not valid"}),401
+            return ({"Error": "Email as enterd is not valid"}),400
 
         return (DbManager.login(args['email'],args['password']))
 
