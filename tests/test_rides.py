@@ -50,6 +50,39 @@ def ride_get():
 
 
 
+
+"""
+    A test to test the creation of a new ride
+"""
+def test_Add_ride():
+    with app.app_context():
+        tok=mock_login_token(mock_reg[0].get('username'))
+        old_num_rides=ride_get()
+        result=app.test_client()
+        response=result.post('/api/v1/rides', data=json.dumps(mock_ride[1]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        json.loads(response.data.decode('utf-8'))
+        new_num_rides=ride_get()
+        new_num_rides-1==old_num_rides
+        assert response.json =={"Success":"Your ride has been created and posted"}
+        assert (response.status_code==200)
+
+"""
+    A test for ride creation endpoint
+        -> Its tests if the ride exixts then it errors out
+            When a match in Titles is found
+"""
+def test_Add_ride():
+    with app.app_context():
+        tok=mock_login_token(mock_reg[0].get('username'))
+        old_num_rides=ride_get()
+        result=app.test_client()
+        response=result.post('/api/v1/rides', data=json.dumps(mock_ride[0]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
+        json.loads(response.data.decode('utf-8'))
+        new_num_rides=ride_get()
+        if new_num_rides==old_num_rides:
+            assert response.json =={"Error":"A Title like the one you want to enter exists,Let it Be unique"}
+            assert (response.status_code==406)
+
 """
     A test on get all rides from db
 """
@@ -75,7 +108,7 @@ def test_Get_ride():
     response=result.get('/api/v1/rides/1')
     assert response.json==[[1,
     "KAC 345T",
-    "Ithacaa to Sparta",
+    "Troy to Sparta",
     "06-06-2018",
     45,
     7,
@@ -86,32 +119,3 @@ def test_Get_ride():
     ]]
      
     assert(response.status_code==200)
-
-"""
-    A test for ride creation endpoint
-    Its tests if the ride exixts then it errors out
-    When a match in Titles is found
-"""
-def test_Add_ride():
-    with app.app_context():
-        tok=mock_login_token(mock_reg[0].get('username'))
-        result=app.test_client()
-        response=result.post('/api/v1/rides', data=json.dumps(mock_ride[0]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        json.loads(response.data.decode('utf-8'))
-        assert response.json =={"Error":"A Title like the one you want to enter exists,Let it Be unique"}
-        assert (response.status_code==406)
-
-"""
-    A test to test the creation of a new ride
-"""
-def test_Add_ride():
-    with app.app_context():
-        tok=mock_login_token(mock_reg[0].get('username'))
-        old_num_rides=ride_get()
-        result=app.test_client()
-        response=result.post('/api/v1/rides', data=json.dumps(mock_ride[1]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        new_num_rides=ride_get()
-        json.loads(response.data.decode('utf-8'))
-        if new_num_rides-1==old_num_rides:
-            assert response.json =={"Success":"Your ride has been created and posted"}
-            assert (response.status_code==200)
