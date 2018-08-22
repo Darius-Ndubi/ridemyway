@@ -54,7 +54,7 @@ class Ride_requests(Resource):
         #find the ride if the ride exists
         search_ride=User.get_ride(self.id)
         #user cant request there own ride
-        #print (search_ride)
+        print (search_ride)
         if requester_name==search_ride[0][7]:
             return ({"Error":"You cannot request your own ride"}),403
         
@@ -83,7 +83,7 @@ class Ride_respond(Resource):
             return ({"Error":"Make sure you have entered the correct request id"}),404
         else:
             #search_req[0][9]=action
-            response_action=User.ride_action(req_id,action)
+            User.ride_action(req_id,action)
             return {"Success":"Your response has been posted successfully"},200
         
 

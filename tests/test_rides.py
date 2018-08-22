@@ -114,7 +114,7 @@ def test_Add_ride_empty_car_license():
         result=app.test_client()
         tok=mock_login_token(mock_reg[0].get('username'))
         response=result.post('/api/v1/rides', data=json.dumps(mock_ride[2]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        data_input=json.loads(response.data.decode('utf-8'))
+        json.loads(response.data.decode('utf-8'))
         assert response.json=={"Error": "car License field cannot be empty"}
         assert(response.status_code==400)
 
@@ -123,7 +123,7 @@ def test_Add_ride_empty_title():
         result=app.test_client()
         tok=mock_login_token(mock_reg[0].get('username'))
         response=result.post('/api/v1/rides', data=json.dumps(mock_ride[3]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        data_input=json.loads(response.data.decode('utf-8'))
+        json.loads(response.data.decode('utf-8'))
         assert response.json=={"Error": "The title cannot be empty"}
         assert(response.status_code==400)
 
@@ -132,7 +132,7 @@ def test_Add_ride_empty_ride_date():
         result=app.test_client()
         tok=mock_login_token(mock_reg[0].get('username'))
         response=result.post('/api/v1/rides', data=json.dumps(mock_ride[4]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        data_input=json.loads(response.data.decode('utf-8'))
+        json.loads(response.data.decode('utf-8'))
         assert response.json=={"Error":"The date of the ride cannot be empty"}
         assert(response.status_code==400)
 
@@ -141,7 +141,7 @@ def test_Add_ride_empty_num_seats():
         result=app.test_client()
         tok=mock_login_token(mock_reg[0].get('username'))
         response=result.post('/api/v1/rides', data=json.dumps(mock_ride[5]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        data_input=json.loads(response.data.decode('utf-8'))
+        json.loads(response.data.decode('utf-8'))
         assert response.json=={"Error":"The number of  available seats cannot be empty"}
         assert(response.status_code==400)
 
@@ -150,16 +150,16 @@ def test_Add_ride_empty_start_time():
         result=app.test_client()
         tok=mock_login_token(mock_reg[0].get('username'))
         response=result.post('/api/v1/rides', data=json.dumps(mock_ride[6]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        data_input=json.loads(response.data.decode('utf-8'))
+        json.loads(response.data.decode('utf-8'))
         assert response.json=={"Error":"Please specify when the ride will start"}
         assert(response.status_code==400)
 
-def test_Add_ride_empty_start_time():
+def test_Add_ride_empty_ride_price():
     with app.app_context():
         result=app.test_client()
         tok=mock_login_token(mock_reg[0].get('username'))
         response=result.post('/api/v1/rides', data=json.dumps(mock_ride[7]),content_type='application/json',headers={ 'Authorization': 'Bearer ' + tok })
-        data_input=json.loads(response.data.decode('utf-8'))
+        json.loads(response.data.decode('utf-8'))
         assert response.json=={"Info":"Filled can't be empty but if ride is free just input 0"}
         assert(response.status_code==400)
 
